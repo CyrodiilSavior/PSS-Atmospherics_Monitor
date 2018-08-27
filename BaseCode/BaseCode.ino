@@ -16,7 +16,7 @@
 #include "SparkFunBME280.h"
 
 //Create Sensor
-BME280 mySensorB; 
+BME280 mySensorB;
 
 // Screen inputs
 #define cs   10
@@ -42,7 +42,7 @@ void setup() {
   TFTscreen.stroke(255, 255, 255);
 
   //Play Init. Anim.
-  
+
   TFTscreen.text("Paranormal",10,37);
   TFTscreen.text("  Superstore",10,67);
   delay(2000);
@@ -54,50 +54,51 @@ void setup() {
   mySensorB.setI2CAddress(0x76); //Connect to a second sensor
   if(mySensorB.beginI2C() == false) Serial.println("Sensor B connect failed");
   TFTscreen.setTextSize(1);
-}
 
-void loop() {
-  //Temp
   TFTscreen.stroke(255, 255, 255);
   TFTscreen.text("Temp: ",6,25);
   TFTscreen.text("F",139,25);
-  writeToScreen(mySensorB.readTempF(),65,25);
 
-  //Barometric Pressure
-  
-  TFTscreen.stroke(255, 255, 255);
   TFTscreen.text("Pres: ",6,56);
   TFTscreen.text("hpa",139,56);
-  writeToScreen(mySensorB.readFloatPressure(),65,56);
 
-  //Humidity
-  
-  TFTscreen.stroke(255, 255, 255);
   TFTscreen.text("Humid: ",6,87);
   TFTscreen.text("%",139,87);
-  writeToScreen(mySensorB.readFloatHumidity(),65,87);
+
 
 }
 
-void writeToScreen(float input, int x, int y){
+void loop() {
+
+  writeToScreen(mySensorB.readTempF(),mySensorB.readFloatPressure(),mySensorB.readFloatHumidity());
+
+}
+
+void writeToScreen(float tempInput, float pressureInput, int HumidityInput){
  //Preliminary Garbage
- char result[12];
- dtostrf(input, 6, 2, result);
-  
-  //Output to serial for testing
-  Serial.println(input);
+ char temp[6];
+ char pressure[6];
+ char humid[6];
+ dtostrf(tempInput, 6, 2, temp);
+ dtostrf(pressureInput, 6, 2, pressure);
+ dtostrf(HumidityInput, 6, 2, humid);
+
 
   //Clear screen for new display
   TFTscreen.stroke(255, 255, 255);
-  TFTscreen.text(result,x,y);
-  delay(1);
+  TFTscreen.text(temp,6,25);
+  TFTscreen.text(pressure,6,56);
+  TFTscreen.text(humid,6,87);
+  delay(800);
   TFTscreen.stroke(0, 0, 0);
-  TFTscreen.text(result,x,y);
+  TFTscreen.text(temp,6,25);
+  TFTscreen.text(pressure,6,56);
+  TFTscreen.text(humid,6,87);
 
 }
 
 void writeToScreen(char* input, int x, int y){
- 
+
   //Output to serial for testing
   Serial.println(input);
 
@@ -105,7 +106,3 @@ void writeToScreen(char* input, int x, int y){
   TFTscreen.text(input,x,y);
 
 }
-
-
-
-
