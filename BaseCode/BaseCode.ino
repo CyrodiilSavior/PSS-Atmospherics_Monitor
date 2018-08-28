@@ -86,14 +86,14 @@ void writeToScreen(float tempInput, float pressureInput, int HumidityInput){
 
   //Clear screen for new display
   TFTscreen.stroke(255, 255, 255);
-  TFTscreen.text(temp,6,25);
-  TFTscreen.text(pressure,6,56);
-  TFTscreen.text(humid,6,87);
+  TFTscreen.text(temp,65,25);
+  TFTscreen.text(pressure,65,56);
+  TFTscreen.text(humid,65,87);
   delay(800);
   TFTscreen.stroke(0, 0, 0);
-  TFTscreen.text(temp,6,25);
-  TFTscreen.text(pressure,6,56);
-  TFTscreen.text(humid,6,87);
+  TFTscreen.text(temp,65,25);
+  TFTscreen.text(pressure,65,56);
+  TFTscreen.text(humid,65,87);
 
 }
 
